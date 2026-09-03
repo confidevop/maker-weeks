@@ -1,3 +1,5 @@
+import os
+
 from weasyprint import HTML
 
 BLOCK_COLORS = {1: "#E8552D", 2: "#2E8B8B", 3: "#7B4FBF", 4: "#C4183C", 5: "#1F7A3D"}
@@ -56,6 +58,71 @@ WEEKS = [
           ("Share button missing?", "You have to be signed in to your Scratch account.")],
    challenge="Send your game to a grandparent. Then watch someone else play it — where do they get stuck?",
    sketch="Draw your winning screen"),
+
+ dict(n=6, block=2, title="Hello, micro:bit",
+   goal="A micro:bit that smiles at you.",
+   ready=["Laptop", "micro:bit", "USB cable", "Pencil"],
+   steps=["Plug the micro:bit into the laptop with the USB cable.",
+          "Click <b>New Project</b>. Name it <b>Hello</b>.",
+          "Drag a <b>show icon</b> block inside <b>on start</b>. Pick the heart.",
+          "Click <b>Download</b>. Drag the file onto the <b>MICROBIT</b> drive.",
+          "Unplug the cable, plug it back in. Watch the lights."],
+   fixes=[("Nothing happens after the download?", "Find the <b>MICROBIT</b> drive on the laptop and drag the file right onto it."),
+          ("No MICROBIT drive?", "Try the other cable. Some cables only charge \u2014 they don't carry files.")],
+   challenge="Swap the heart for your initial using <b>show string</b>. Then make it flash: icon, pause, clear screen.",
+   sketch="Design your own 5\u00d75 picture"),
+
+ dict(n=7, block=2, title="Two Buttons, Two Jobs",
+   goal="A micro:bit that answers you.",
+   ready=["Laptop", "micro:bit", "USB cable", "Pencil"],
+   steps=["Click <b>New Project</b>. Name it <b>Buttons</b>.",
+          "Click <b>Input</b>. Drag out <b>on button A pressed</b>.",
+          "Drop <b>show string</b> inside it. Type <b>YES</b>.",
+          "Do the same for button B. Make it say <b>NO</b>.",
+          "Download it. Ask the micro:bit a question."],
+   fixes=[("Only one button works?", "Each button needs its own block. Check one drop-down says A and the other says B."),
+          ("Words go by too fast?", "<b>show string</b> scrolls once. Press the button again.")],
+   challenge="Add <b>on button A+B pressed</b>. Make it show something only you would know.",
+   sketch="Write your two button messages"),
+
+ dict(n=8, block=2, title="Shake It",
+   goal="A dice you shake instead of roll.",
+   ready=["Laptop", "micro:bit", "USB cable", "Pencil"],
+   steps=["Click <b>New Project</b>. Name it <b>Dice</b>.",
+          "Click <b>Input</b>. Drag out <b>on shake</b>.",
+          "Drop <b>show number</b> inside it.",
+          "Drag <b>pick random</b> from <b>Math</b> into the number slot. Make it 1 to 6.",
+          "Download it. Shake it twenty times."],
+   fixes=[("It rolls when you don't want it to?", "You're bumping the table. Hold it flat and shake on purpose."),
+          ("Keep getting 0?", "<b>pick random</b> starts at 0. Change the first box to 1.")],
+   challenge="Make it roll two dice \u2014 two numbers with a pause between. Roll twenty times. Which total wins?",
+   sketch="Tally your twenty rolls"),
+
+ dict(n=9, block=2, title="Two micro:bits Talking",
+   goal="A message sent across the room with no wires.",
+   ready=["Laptop", "micro:bit \u00d72", "USB cable", "Battery pack", "Pencil"],
+   steps=["Click <b>New Project</b>. Name it <b>Radio</b>.",
+          "Put <b>radio set group 1</b> inside <b>on start</b>.",
+          "On button A pressed, add <b>radio send number 1</b>.",
+          "Add <b>on radio received</b>. Put a <b>show icon</b> heart inside.",
+          "Download the <b>same</b> program to <b>both</b> micro:bits. Press A."],
+   fixes=[("Nothing arrives?", "Both need the same group number and the same program. Download it twice."),
+          ("Only one lights up?", "The sender doesn't show its own message. Add a <b>show icon</b> under the send block too.")],
+   challenge="Walk to the far end of the house and press A. How far can you get before it stops? Mark the spot.",
+   sketch="Map how far the signal reached"),
+
+ dict(n=10, block=2, title="Wear It",
+   goal="A step counter you can take outside.",
+   ready=["Laptop", "micro:bit", "USB cable", "Battery pack", "AAA batteries"],
+   steps=["Click <b>New Project</b>. Name it <b>Steps</b>.",
+          "Click <b>Variables</b>. Make a variable called <b>steps</b>.",
+          "On shake, add <b>change steps by 1</b>.",
+          "On button A pressed, add <b>show number steps</b>.",
+          "Download it. Clip on the battery pack. Go for a walk."],
+   fixes=[("Count way too high?", "One step can jiggle it twice. Walk exactly 10 steps and see what it says."),
+          ("Goes blank when unplugged?", "Switch the battery pack on and push the plug all the way in.")],
+   challenge="Count one lap of the garden. Then count Dad's lap. Whose legs take more steps \u2014 and why?",
+   sketch="Draw where you'll wear it"),
 ]
 
 CSS = """
@@ -149,4 +216,8 @@ def build(weeks, out):
     print("wrote", out)
 
 if __name__ == "__main__":
-    build(WEEKS, "/home/claude/block1-weeks2-5.pdf")
+    here = os.path.dirname(os.path.abspath(__file__))
+    for b in sorted({w["block"] for w in WEEKS}):
+        ws = [w for w in WEEKS if w["block"] == b]
+        name = "block%d-weeks%d-%d.pdf" % (b, ws[0]["n"], ws[-1]["n"])
+        build(ws, os.path.join(here, name))

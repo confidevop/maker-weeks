@@ -46,7 +46,8 @@ cd qr && python3 make_qr.py      # edit BASE first
 cd print && pip install weasyprint && python3 make_spreads.py
 ```
 
-Half-letter landscape, 1-sided, 0.85in left margin for 3-hole punch.
+Writes one PDF per block — `block1-weeks2-5.pdf`, `block2-weeks6-10.pdf` — into
+`print/`. Half-letter landscape, 1-sided, 0.85in left margin for 3-hole punch.
 
 ---
 
@@ -83,10 +84,12 @@ Same content, two shapes. Keep them side by side when editing.
 
 ## Parts
 
-micro:bits ×2 already on hand. Everything else is bought once and reused
-from Block 3 onward: edge connector breakout ×2, half-size breadboard ×2,
-jumper wires + alligator-to-male clips, LEDs + 220Ω resistors, piezo buzzer ×2,
-SG90 servo ×2, AAA battery holder ×2, galvanised nails for a moisture probe.
+micro:bits ×2 already on hand. Block 2 also needs micro-USB cables ×2 (data,
+not charge-only) and AAA battery holders ×2 — weeks 9 and 10 go untethered.
+
+Block 3 onward is bought once and reused: edge connector breakout ×2, half-size
+breadboard ×2, jumper wires + alligator-to-male clips, LEDs + 220Ω resistors,
+piezo buzzer ×2, SG90 servo ×2, galvanised nails for a moisture probe.
 
 ## `videos/`
 
