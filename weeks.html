@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maker Weeks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#241E2B; --paper:#EDE9F7; --card:#fff; --muted:#7A7286;
+  --accent:#E8552D;
+  --motion:#4C97FF; --events:#FFBF00; --looks:#9966FF; --sensing:#5CB1D6; --control:#FFAB19;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--paper);color:var(--ink);
+  padding:20px 18px 60px;max-width:760px;margin:0 auto;font-size:18px}
+h1,h2,h3,.f{font-family:'Fredoka',system-ui,sans-serif}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.pill{background:var(--accent);color:#fff;font-family:'Fredoka';font-weight:600;font-size:14px;
+  letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
+.of{color:var(--muted);font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:40px;line-height:1.02;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.sub{color:var(--muted);font-weight:700;font-size:17px;margin-bottom:20px}
+.open{display:flex;align-items:center;gap:14px;width:100%;background:var(--ink);color:#fff;border:none;
+  font-family:'Fredoka';font-size:22px;font-weight:600;padding:20px 22px;border-radius:20px;
+  margin-bottom:10px;text-decoration:none;box-shadow:0 5px 0 #100C16;transition:transform .08s,box-shadow .08s}
+.open:active{transform:translateY(4px);box-shadow:0 1px 0 #100C16}
+.open .flag{width:38px;height:38px;border-radius:50%;background:#4CBB17;display:grid;place-items:center;flex:0 0 auto;font-size:17px}
+.open small{display:block;font-family:'Nunito';font-size:14px;font-weight:700;opacity:.6}
+.note{background:#FFF3CC;border-radius:14px;padding:12px 16px;font-size:15px;font-weight:700;margin-bottom:26px;line-height:1.4}
+.prog{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+.prog h2{font-size:22px;font-weight:600}
+.count{font-family:'Fredoka';font-weight:600;color:var(--accent);font-size:17px}
+.stack{margin-bottom:30px}
+.blk{position:relative;display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:none;
+  cursor:pointer;font-family:'Fredoka';font-weight:500;font-size:19px;line-height:1.25;color:#fff;
+  padding:18px 18px 18px 16px;border-radius:8px;margin-bottom:5px;box-shadow:0 3px 0 rgba(0,0,0,.22);
+  transition:transform .1s,filter .2s,opacity .2s}
+.blk::after{content:"";position:absolute;left:26px;bottom:-8px;width:30px;height:9px;background:inherit;
+  border-radius:0 0 7px 7px;box-shadow:0 3px 0 rgba(0,0,0,.22)}
+.blk:last-child::after{display:none}
+.blk:active{transform:translateY(3px) scale(.995)}
+.blk .n{flex:0 0 auto;width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.28);
+  display:grid;place-items:center;font-size:17px;font-weight:600}
+.blk b{font-weight:700}
+.blk.done{filter:saturate(.25) brightness(1.16);opacity:.72}
+.blk.done .label{text-decoration:line-through;text-decoration-thickness:2px}
+.blk.done .n{background:#fff;color:#2E8B2E}
+.blk.done .n::before{content:"✓"}
+.blk.done .n span{display:none}
+.card{background:var(--card);border-radius:20px;padding:22px;margin-bottom:16px}
+.card h3{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.card p{font-weight:700;line-height:1.4}
+.card p+p{margin-top:10px}
+details{background:var(--card);border-radius:20px;padding:6px 22px;margin-bottom:16px}
+summary{font-family:'Fredoka';font-weight:600;font-size:20px;padding:16px 0;cursor:pointer;
+  list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:26px;color:var(--accent);line-height:1}
+details[open] summary::after{content:"–"}
+details .body{padding-bottom:18px}
+.fix{font-weight:700;line-height:1.45;font-size:17px}
+.fix+.fix{margin-top:14px}
+.fix em{display:block;font-style:normal;color:var(--accent);font-family:'Fredoka';font-weight:600}
+.vid{display:flex;align-items:center;gap:12px;margin-top:16px;background:var(--paper);border-radius:14px;
+  padding:14px 16px;font-weight:800;font-size:16px;text-decoration:none;color:var(--ink)}
+.vid span{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:13px}
+.finish{width:100%;border:3px dashed #C9C0DE;background:transparent;border-radius:22px;padding:26px;
+  font-family:'Fredoka';font-size:24px;font-weight:600;color:var(--muted);cursor:pointer;margin-bottom:14px;transition:.25s}
+.finish.on{border-style:solid;border-color:var(--accent);background:var(--accent);color:#fff}
+.upload{display:block;text-align:center;font-weight:800;color:var(--muted);text-decoration:none;font-size:16px;padding:10px}
+footer{display:flex;gap:10px;margin-top:26px}
+footer a{flex:1;text-align:center;background:var(--card);border-radius:16px;padding:16px 10px;
+  text-decoration:none;color:var(--ink);font-family:'Fredoka';font-weight:500;font-size:16px}
+footer a.off{opacity:.35;pointer-events:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ============================================================
+   ADD A WEEK = ADD AN OBJECT. Nothing else to touch.
+   QR codes point to  yoursite.com/weeks.html#week3  etc.
+   ============================================================ */
+const BLOCKS = {
+  1:{name:"Coding",     accent:"#E8552D"},
+  2:{name:"micro:bit",  accent:"#2E8B8B"},
+  3:{name:"Electronics",accent:"#7B4FBF"},
+  4:{name:"3D Design",  accent:"#C4183C"},
+  5:{name:"Invent",     accent:"#1F7A3D"}
+};
+
+const WEEKS = [
+{
+  n:1, block:1, title:"Get the Cat Moving",
+  sub:"Today you'll make a beach scene where three characters talk to you.",
+  open:{label:"Open Scratch", url:"https://scratch.mit.edu/projects/editor/"},
+  steps:["Click the orange <b>Create</b> button",
+         "Tap <b>Tutorials</b> at the top. Pick <b>Getting Started</b>",
+         "Back to Tutorials. Do <b>Add a Sprite</b>",
+         "Back again. Do <b>Add a Backdrop</b>",
+         "Press the green flag. Watch what happens"],
+  challenge:"Put <b>3 sprites</b> on a beach. Make each one say something different when you click it.",
+  fixes:[["Nothing is moving","Check you clicked the green flag, not the red stop sign."],
+         ["Blocks won't snap together","Drag one so it touches the bottom edge of the block above. Look for the white shadow line."],
+         ["I lost my project","Press the back arrow, then <b>My Stuff</b>."]],
+  video:"Watch Dad do step 3 (40 sec)"
+},
+{
+  n:2, block:1, title:"Letters Come Alive",
+  sub:"Today you'll make your name dance across the screen.",
+  open:{label:"Open Scratch", url:"https://scratch.mit.edu/projects/editor/"},
+  steps:["Click <b>Create</b>, then <b>Tutorials</b>",
+         "Do <b>Animate a Name</b>",
+         "Add every letter of your name as its own sprite",
+         "Give each letter a different sound or spin",
+         "Back to Tutorials. Do <b>Add Effects</b> on one letter"],
+  challenge:"Animate the dog's name — or your best friend's. Make one letter do something silly.",
+  fixes:[["A letter won't change color","Click that letter at the bottom of the screen first, not the stage."],
+         ["No sound","Turn the volume up. Check the speaker isn't muted."],
+         ["Letters are on top of each other","Drag each one apart on the stage."]],
+  video:"Watch Dad add a sound (30 sec)"
+},
+{
+  n:3, block:1, title:"You're the Driver",
+  sub:"Today you'll steer a sprite through a maze you drew yourself.",
+  open:{label:"Open Scratch", url:"https://scratch.mit.edu/projects/editor/"},
+  steps:["Click <b>Create</b>, then <b>Tutorials</b>",
+         "Do <b>Use Arrow Keys</b>",
+         "Try all four arrows. Fix any that go the wrong way",
+         "Back to Tutorials. Do <b>Glide Around</b>",
+         "Draw a maze on the backdrop with the paint tools"],
+  challenge:"Drive your sprite from the start of the maze to the treasure without touching a wall.",
+  fixes:[["Sprite runs off the screen","Add an <b>if on edge, bounce</b> block."],
+         ["Arrows do nothing","Click once on the stage, then press a key."],
+         ["Paint tools are confusing","Use the rectangle tool. Thick lines are easier to drive between."]],
+  video:"Watch Dad draw a maze (50 sec)"
+},
+{
+  n:4, block:1, title:"Your First Real Game",
+  sub:"Today you'll make a chase game that keeps score.",
+  open:{label:"Open Scratch", url:"https://scratch.mit.edu/projects/editor/"},
+  steps:["Click <b>Create</b>, then <b>Tutorials</b>",
+         "Do <b>Make a Chase Game</b>. Go slow — this one is big",
+         "Find the <b>Score</b> box. Watch the number go up",
+         "Play your game three times",
+         "Swap the sprites for ones you like better"],
+  challenge:"Make the score count <b>down</b> from 10 instead of up. What should happen at zero?",
+  fixes:[["Score never changes","The <b>change score by 1</b> block must sit inside the forever loop."],
+         ["The chaser is too fast","Lower the number in the <b>move</b> block."],
+         ["This is taking forever","That's fine. Stop here and finish it next week."]],
+  video:"Watch Dad find the Score block (45 sec)"
+},
+{
+  n:5, block:1, title:"Show It Off",
+  sub:"Today you'll finish a game and send it to someone.",
+  open:{label:"Open Scratch", url:"https://scratch.mit.edu/projects/editor/"},
+  steps:["Click <b>Create</b>, then <b>Tutorials</b>",
+         "Do <b>Make a Pong Game</b>",
+         "Add a sound when the ball bounces",
+         "Add a <b>You win!</b> message at the end",
+         "Click <b>Share</b>. Copy the link"],
+  challenge:"Send your game to a grandparent. Then watch someone else play it — where do they get stuck?",
+  fixes:[["Ball goes through the paddle","The <b>touching</b> block needs the paddle's exact name."],
+         ["No Share button","You have to be signed in to your Scratch account. Ask a grown-up."],
+         ["It's too easy","Make the paddle smaller or the ball faster."]],
+  video:"Watch Dad share a project (35 sec)"
+}
+];
+
+/* --- rendering --- */
+const COLORS=["events","motion","looks","sensing","control"];
+const state={};  // in-memory. See note at bottom to make it save for real.
+
+function render(){
+  const n = parseInt((location.hash.match(/\d+/)||[1])[0]);
+  const w = WEEKS.find(x=>x.n===n) || WEEKS[0];
+  const B = BLOCKS[w.block];
+  document.documentElement.style.setProperty('--accent', B.accent);
+  if(!state[w.n]) state[w.n]={steps:[],done:false};
+  const s=state[w.n];
+  const prev=WEEKS.find(x=>x.n===w.n-1), next=WEEKS.find(x=>x.n===w.n+1);
+
+  document.getElementById('app').innerHTML=`
+    <div class="eyebrow"><span class="pill">Week ${w.n}</span>
+      <span class="of">Block ${w.block} &middot; ${B.name}</span></div>
+    <h1>${w.title}</h1>
+    <p class="sub">${w.sub}</p>
+
+    <a class="open" href="${w.open.url}" target="_blank" rel="noopener">
+      <span class="flag">▶</span>
+      <span>${w.open.label}<small>Do this part on the laptop</small></span></a>
+    <p class="note">iPad stays here to show you the steps. Building happens on the big screen.</p>
+
+    <div class="prog"><h2>Your steps</h2>
+      <span class="count">${s.steps.length} of ${w.steps.length} done</span></div>
+
+    <div class="stack">${w.steps.map((t,i)=>`
+      <button class="blk ${COLORS[i%5]} ${s.steps.includes(i)?'done':''}" data-i="${i}"
+        style="background:var(--${COLORS[i%5]})">
+        <span class="n"><span>${i+1}</span></span><span class="label">${t}</span></button>`).join('')}</div>
+
+    <div class="card"><h3>Make it yours</h3><p>${w.challenge}</p>
+      <p style="color:var(--muted);font-size:16px">Draw it in your book first if you want.</p></div>
+
+    <details><summary>Something's wrong</summary><div class="body">
+      ${w.fixes.map(f=>`<p class="fix"><em>${f[0]}</em>${f[1]}</p>`).join('')}
+      <a class="vid" href="#"><span>▶</span> ${w.video}</a></div></details>
+
+    <button class="finish ${s.done?'on':''}" id="finish">${s.done?'✓ Week '+w.n+' done — nice work!':'I finished Week '+w.n+'!'}</button>
+    <a class="upload" href="#">📷 Add a photo of what you made</a>
+
+    <footer>
+      <a class="${prev?'':'off'}" href="#week${w.n-1}">← Week ${w.n-1}</a>
+      <a href="#all">All 25 weeks</a>
+      <a class="${next?'':'off'}" href="#week${w.n+1}">Week ${w.n+1} →</a>
+    </footer>`;
+
+  document.querySelectorAll('.blk').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i;
+    s.steps = s.steps.includes(i) ? s.steps.filter(x=>x!==i) : [...s.steps,i];
+    render();
+  });
+  document.getElementById('finish').onclick=()=>{ s.done=!s.done; render(); };
+  window.scrollTo(0,0);
+}
+addEventListener('hashchange',render);
+render();
+
+/* ------------------------------------------------------------
+   TO MAKE PROGRESS SAVE once this is hosted on your own site,
+   replace the `const state={}` line above with:
+
+     const state = JSON.parse(localStorage.getItem('maker')||'{}');
+
+   and add this as the first line inside render():
+
+     localStorage.setItem('maker', JSON.stringify(state));
+
+   (localStorage is blocked inside Claude, works fine on a real host.)
+   ------------------------------------------------------------ */
+</script>
+</body>
+</html>
