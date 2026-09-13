@@ -3,7 +3,8 @@
 A 25-week STEM curriculum: Scratch → micro:bit → electronics → 3D printing → invention.
 
 Two halves that stay in sync:
-- **`weeks.html`** — the page she scans on the iPad. One file, hash-routed (`#week1`, `#week2`…).
+- **`weeks.html`** — the page she scans on the iPad. One file, hash-routed:
+  no hash or `#all` is the contents page, `#week1`…`#week25` are the weeks.
 - **`print/`** — the printed handbook spreads she writes in.
 
 ---
@@ -27,7 +28,8 @@ All 25 weeks are written — every block complete on screen and in print.
 **1. Publish**
 
 Settings → Pages → Source: `main`, folder: `/ (root)`. Live at
-`https://confidevop.github.io/maker-weeks/weeks.html`
+`https://confidevop.github.io/maker-weeks/` — the bare URL opens the
+contents page. QR codes carry their own `#weekN` and go straight there.
 
 Progress saves on the device by itself (`localStorage`), and falls back to
 memory anywhere storage is blocked. Nothing to switch on.
