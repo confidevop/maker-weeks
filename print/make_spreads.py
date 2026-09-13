@@ -369,6 +369,90 @@ ol.steps li:before { content:counter(s); position:absolute; left:0; top:-0.5pt; 
 .rule { border-bottom:1.2pt solid #C9C4C1; height:17pt; }
 """
 
+INTRO_CSS = """
+@page { size: 8.5in 5.5in; margin: 0.38in 0.42in 0.32in 0.85in; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:"DejaVu Sans",sans-serif; color:#1E1B1A; font-size:11.5pt; line-height:1.4; }
+.page { page-break-after:always; height:4.8in; display:flex; flex-direction:column; }
+.page:last-child { page-break-after:auto; }
+.strip { display:flex; justify-content:space-between; align-items:center; flex:0 0 auto;
+  border-bottom:3.5pt solid #1E1B1A; padding-bottom:3pt; margin-bottom:10pt; }
+.block-tag { font-size:8.5pt; font-weight:bold; letter-spacing:1.6pt; text-transform:uppercase; }
+.week-tag { font-size:8.5pt; font-weight:bold; letter-spacing:1.6pt; color:#8A8583; text-transform:uppercase; }
+h1 { font-size:30pt; line-height:1.0; letter-spacing:-0.5pt; margin-bottom:10pt; flex:0 0 auto; }
+.lede { font-size:14pt; font-weight:bold; margin-bottom:4pt; flex:0 0 auto; }
+.lede2 { font-size:14pt; font-weight:bold; color:#8A8583; flex:0 0 auto; }
+.spacer { flex:1 1 auto; }
+.name { flex:0 0 auto; border-top:1.2pt solid #C9C4C1; padding-top:10pt; font-size:11pt; color:#8A8583; }
+.name .rule { display:inline-block; border-bottom:1.2pt solid #1E1B1A; width:3in; margin-left:7pt; }
+.ch { display:flex; gap:9pt; margin-bottom:9pt; flex:0 0 auto; }
+.ch .bar { width:5pt; border-radius:3pt; flex:0 0 auto; }
+.ch .txt { flex:1; }
+.ch .no { font-size:7.5pt; font-weight:bold; letter-spacing:1.2pt; text-transform:uppercase; }
+.ch h2 { font-size:13pt; line-height:1.05; margin:2pt 0 3pt; }
+.ch p { font-size:9.5pt; line-height:1.32; }
+.real { background:#1E1B1A; color:#fff; border-radius:5pt; padding:14pt 16pt; flex:0 0 auto; }
+.real h2 { font-size:16pt; margin-bottom:7pt; }
+.real p { font-size:10.5pt; line-height:1.42; }
+.real p + p { margin-top:7pt; }
+.real .punch { font-size:12.5pt; font-weight:bold; }
+"""
+
+INTRO_CHAPTERS = [
+ (1, "Weeks 1-5",   "You start on a screen",
+     "A cat that walks when you tell it to. Your name, dancing. A maze you drew yourself. "
+     "By Week 5 you'll have a real game, and you'll send it to somebody who doesn't live in this house."),
+ (2, "Weeks 6-10",  "Then the code leaves the screen",
+     "A small board with twenty-five red lights that smiles at you, answers you, and rolls dice when you shake it. "
+     "In Week 9 you'll press a button and a second micro:bit across the house lights up \u2014 nothing connecting them but the air."),
+ (3, "Weeks 11-15", "Then you build the circuit yourself",
+     "Two clips and a bulb, and you decided where the electricity goes. Then sound. Then a traffic light running on its own. "
+     "Then a micro:bit that knows the plant is thirsty before the plant does."),
+ (4, "Weeks 16-20", "Then you make things you can hold",
+     "You'll cut holes through shapes on screen and measure a real object so your design fits it. "
+     "Then a printer turns your drawing into plastic. The first one won't be quite right \u2014 that's why there's a Week 20."),
+ (5, "Weeks 21-25", "Then the instructions stop",
+     "Nobody tells you what to build. You'll find ten annoying things, pick one, and build the ugly version out of cardboard and wire. "
+     "In Week 25 you'll tell a room full of people what problem you solved."),
+]
+
+def intro():
+    head = ('<div class="strip"><div class="block-tag">Maker Weeks</div>'
+            '<div class="week-tag">Read this bit first</div></div>')
+    def chunk(items):
+        return "".join(
+          '''<div class="ch"><div class="bar" style="background:%s"></div><div class="txt">
+             <div class="no" style="color:%s">%s &middot; %s</div><h2>%s</h2><p>%s</p></div></div>'''
+          % (BLOCK_COLORS[b], BLOCK_COLORS[b], wk, BLOCK_NAMES[b], h, p)
+          for b, wk, h, p in items)
+    return """
+<div class="page">
+  %(head)s
+  <h1>This book is yours</h1>
+  <p class="lede">Twenty-five weeks. One a week.</p>
+  <p class="lede2">By the end you'll have built something nobody asked you to build.</p>
+  <div class="spacer"></div>
+  <div class="name">This book belongs to <span class="rule"></span></div>
+</div>
+<div class="page">
+  %(head)s
+  %(chapters_a)s
+  <div class="spacer"></div>
+</div>
+<div class="page">
+  %(head)s
+  %(chapters_b)s
+  <div class="spacer"></div>
+  <div class="real">
+    <h2>That's the part where you're doing it</h2>
+    <p>A wire comes loose. The print snaps. The thing that worked on Tuesday has no interest in working on Wednesday. That isn't the part where it goes wrong.</p>
+    <p class="punch">That's the part where you're actually building something.</p>
+    <p>Every page in this book has an <b>If it breaks</b> box, because everybody needs one \u2014 including the people who build this stuff for a living. Find the loose wire. Fix it. Carry on.</p>
+  </div>
+</div>""" % dict(head=head,
+                 chapters_a=chunk(INTRO_CHAPTERS[:3]),
+                 chapters_b=chunk(INTRO_CHAPTERS[3:]))
+
 def spread(w):
     b = w["block"]
     tag = "Block %d &middot; %s" % (b, BLOCK_NAMES[b])
@@ -412,6 +496,11 @@ def build(weeks, out):
 
 if __name__ == "__main__":
     here = os.path.dirname(os.path.abspath(__file__))
+    html = "<!DOCTYPE html><html><head><meta charset='utf-8'><style>%s</style></head><body>%s</body></html>" % (
+        INTRO_CSS, intro())
+    HTML(string=html).write_pdf(os.path.join(here, "intro.pdf"))
+    print("wrote", os.path.join(here, "intro.pdf"))
+
     for b in sorted({w["block"] for w in WEEKS}):
         ws = [w for w in WEEKS if w["block"] == b]
         name = "block%d-weeks%d-%d.pdf" % (b, ws[0]["n"], ws[-1]["n"])

@@ -4,7 +4,8 @@ A 25-week STEM curriculum: Scratch → micro:bit → electronics → 3D printing
 
 Two halves that stay in sync:
 - **`weeks.html`** — the page she scans on the iPad. One file, hash-routed:
-  no hash or `#all` is the contents page, `#week1`…`#week25` are the weeks.
+  `#start` is the story, no hash or `#all` is the contents page,
+  `#week1`…`#week25` are the weeks.
 - **`print/`** — the printed handbook spreads she writes in.
 
 ---
@@ -51,8 +52,9 @@ edit `BASE` first.
 cd print && pip install weasyprint && python3 make_spreads.py
 ```
 
-Writes one PDF per block — `block1-weeks2-5.pdf` through
-`block5-weeks21-25.pdf` — into `print/`. Week 1 is its own `week01.pdf`.
+Writes `intro.pdf` (the story — front of the binder) and one PDF per
+block, `block1-weeks2-5.pdf` through `block5-weeks21-25.pdf`, into
+`print/`. Week 1 is its own `week01.pdf`.
 Half-letter landscape, 1-sided, 0.85in left margin for 3-hole punch.
 
 ---
