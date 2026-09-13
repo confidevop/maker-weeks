@@ -18,6 +18,8 @@ Two halves that stay in sync:
 | 4 | 16–20 | Tinkercad + printing | `#C4183C` |
 | 5 | 21–25 | Independent invention | `#1F7A3D` |
 
+All 25 weeks are written — every block complete on screen and in print.
+
 ---
 
 ## Setup
@@ -25,29 +27,31 @@ Two halves that stay in sync:
 **1. Publish**
 
 Settings → Pages → Source: `main`, folder: `/ (root)`. Live at
-`https://YOURNAME.github.io/maker-weeks/weeks.html`
+`https://confidevop.github.io/maker-weeks/weeks.html`
 
-**2. Turn on saving**
+Progress saves on the device by itself (`localStorage`), and falls back to
+memory anywhere storage is blocked. Nothing to switch on.
 
-`weeks.html` ships with in-memory state so it previews cleanly. Once hosted,
-apply the change described in the comment at the bottom of the file — two lines,
-swaps it to `localStorage`.
-
-**3. Make the QR codes**
+**2. Make the QR codes**
 
 ```
 pip install "qrcode[pil]"
-cd qr && python3 make_qr.py      # edit BASE first
+cd qr && python3 make_qr.py
 ```
 
-**4. Print the handbook**
+`week01.png` … `week25.png` are already checked in, pointing at
+`confidevop.github.io`. Re-run this only if your Pages URL is different —
+edit `BASE` first.
+
+**3. Print the handbook**
 
 ```
 cd print && pip install weasyprint && python3 make_spreads.py
 ```
 
-Writes one PDF per block — `block1-weeks2-5.pdf`, `block2-weeks6-10.pdf` — into
-`print/`. Half-letter landscape, 1-sided, 0.85in left margin for 3-hole punch.
+Writes one PDF per block — `block1-weeks2-5.pdf` through
+`block5-weeks21-25.pdf` — into `print/`. Week 1 is its own `week01.pdf`.
+Half-letter landscape, 1-sided, 0.85in left margin for 3-hole punch.
 
 ---
 
@@ -57,7 +61,7 @@ Writes one PDF per block — `block1-weeks2-5.pdf`, `block2-weeks6-10.pdf` — i
 
 ```js
 {
-  n:6, block:2, title:"Hello, micro:bit",
+  n:26, block:5, title:"Hello, micro:bit",
   sub:"Today you'll make the micro:bit smile at you.",
   open:{label:"Open MakeCode", url:"https://makecode.microbit.org/"},
   steps:["...", "...", "..."],          // 5 max, one line each
@@ -66,6 +70,8 @@ Writes one PDF per block — `block1-weeks2-5.pdf`, `block2-weeks6-10.pdf` — i
   video:"Watch Dad do step 2 (40 sec)"
 }
 ```
+
+`open` is optional — leave it off for a week with no screen (21, 22, 25 do).
 
 **Print** — append the matching dict to `WEEKS` in `print/make_spreads.py` and re-run.
 
@@ -90,6 +96,9 @@ not charge-only) and AAA battery holders ×2 — weeks 9 and 10 go untethered.
 Block 3 onward is bought once and reused: edge connector breakout ×2, half-size
 breadboard ×2, jumper wires + alligator-to-male clips, LEDs + 220Ω resistors,
 piezo buzzer ×2, SG90 servo ×2, galvanised nails for a moisture probe.
+
+Block 4 needs a Tinkercad login and printer time. Block 5 needs cardboard,
+tape, and people willing to be handed something and told nothing.
 
 ## `videos/`
 

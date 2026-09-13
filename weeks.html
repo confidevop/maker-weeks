@@ -246,13 +246,240 @@ const WEEKS = [
          ["I want to start over","Add <b>on button B pressed</b> → <b>set steps to 0</b>."]],
   video:"Watch Dad make a variable (40 sec)"
 }
+,
+{
+  n:11, block:3, title:"Light It Up",
+  sub:"Today you'll make a light of your own turn on and off.",
+  open:{label:"Open MakeCode", url:"https://makecode.microbit.org/"},
+  steps:["Clip a wire from pin <b>0</b> to the LED's <b>long</b> leg",
+         "Clip a second wire from <b>GND</b> to the LED's <b>short</b> leg",
+         "In MakeCode, click <b>Advanced</b>, then <b>Pins</b>",
+         "On button A pressed, add <b>digital write pin P0 to 1</b>. On button B, make it <b>0</b>",
+         "Download it. Press A. Press B"],
+  challenge:"Make the light blink on its own — on, pause, off, pause, inside a <b>forever</b> loop.",
+  fixes:[["The LED never lights","Turn it around. Long leg to P0, short leg to GND. It only works one way."],
+         ["It's very dim","Push the clips onto the bare metal legs, not the plastic."],
+         ["I can't find digital write","It's hiding under <b>Advanced</b> at the bottom of the block list."]],
+  video:"Watch Dad clip the LED on (40 sec)"
+},
+{
+  n:12, block:3, title:"Make Some Noise",
+  sub:"Today you'll make the micro:bit play a tune out loud.",
+  open:{label:"Open MakeCode", url:"https://makecode.microbit.org/"},
+  steps:["Clip a wire from pin <b>0</b> to one leg of the buzzer",
+         "Clip a second wire from <b>GND</b> to the buzzer's other leg",
+         "Click <b>Music</b>. Drag <b>start melody</b> into <b>on button A pressed</b>",
+         "Swap it for <b>play tone Middle C for 1 beat</b>. Try other notes",
+         "Download it. Press A"],
+  challenge:"Play the first line of Happy Birthday. Write the notes in your book before you build it.",
+  fixes:[["No sound at all","Swap the two clips around, then check both are gripping bare metal."],
+         ["It's too quiet","Hold the buzzer flat against the table. It gets much louder."],
+         ["The tune won't stop","<b>start melody</b> has a repeat drop-down. Set it to <b>once</b>."]],
+  video:"Watch Dad play a tone (35 sec)"
+},
+{
+  n:13, block:3, title:"The Breadboard",
+  sub:"Today you'll build a traffic light that runs by itself.",
+  open:{label:"Open MakeCode", url:"https://makecode.microbit.org/"},
+  steps:["Push the micro:bit into the <b>edge connector</b>. Plug that into the breadboard",
+         "Put a red, a yellow and a green LED in three <b>separate</b> rows",
+         "Run a <b>220Ω resistor</b> from each short leg to the blue <b>−</b> rail",
+         "Run a jumper from <b>P0</b>, <b>P1</b> and <b>P2</b> to each long leg",
+         "Light them in order with <b>digital write</b> and <b>pause</b>. Download it"],
+  challenge:"Time a real traffic light on your street. Change your pauses until yours matches.",
+  fixes:[["Only one LED works","Each LED needs its own row. Two legs in one row is a short cut."],
+         ["Nothing lights at all","Run one jumper from <b>GND</b> to the blue <b>−</b> rail. Everything needs that."],
+         ["I mixed up the legs","Long leg takes power in. Short leg goes out to the resistor. Every time."]],
+  video:"Watch Dad wire one LED (50 sec)"
+},
+{
+  n:14, block:3, title:"Make It Move",
+  sub:"Today you'll build an arm that waves when you press a button.",
+  open:{label:"Open MakeCode", url:"https://makecode.microbit.org/"},
+  steps:["Plug the servo's <b>brown</b> wire to GND, <b>red</b> to 3V, <b>orange</b> to P0",
+         "Click <b>Advanced</b>, then <b>Pins</b>. Find <b>servo write pin P0 to 180</b>",
+         "Put it inside <b>on button A pressed</b>",
+         "Add another one on button B. Set that one to <b>0</b>",
+         "Download it. Tape a cardboard arm to the servo. Press A"],
+  challenge:"Make it wave on its own — 0, pause, 180, pause, forever. Then give it a face.",
+  fixes:[["It buzzes and shakes","It's pushing past its end stop. Stay between 0 and 180."],
+         ["It doesn't move","Check the red wire is on <b>3V</b>, not GND. The colours matter here."],
+         ["It moves once, then stops","It's already at that angle. Send it a different number."]],
+  video:"Watch Dad plug in the servo (45 sec)"
+},
+{
+  n:15, block:3, title:"Is the Plant Thirsty?",
+  sub:"Today you'll build a sensor that tells you when to water a plant.",
+  open:{label:"Open MakeCode", url:"https://makecode.microbit.org/"},
+  steps:["Clip a wire from <b>P1</b> to one nail, and <b>GND</b> to the other nail",
+         "Push both nails into the soil, a finger's width apart",
+         "Put <b>show number</b> → <b>analog read pin P1</b> inside <b>forever</b>",
+         "Write down the number dry. Water the plant. Write it down wet",
+         "Add an <b>if</b>: below your dry number, show a sad face"],
+  challenge:"Add the buzzer from Week 12. Make it beep until someone waters the plant.",
+  fixes:[["The number jumps around","That's normal. Pick a number halfway between your dry and wet readings."],
+         ["It always says 0","A nail has come loose. Check both clips grip bare metal."],
+         ["It says thirsty when it's wet","Your two numbers are the wrong way round in the <b>if</b>."]],
+  video:"Watch Dad read the soil (40 sec)"
+},
+{
+  n:16, block:4, title:"Build in 3D",
+  sub:"Today you'll build something solid you can spin around.",
+  open:{label:"Open Tinkercad", url:"https://www.tinkercad.com/"},
+  steps:["Sign in. Click <b>Create</b>, then <b>3D design</b>",
+         "Drag a <b>Box</b> onto the workplane. Pull its corners bigger",
+         "Drag a <b>Cylinder</b> in. Switch it to <b>Hole</b>. Push it into the box",
+         "Select both. Click <b>Group</b>. Watch the hole appear",
+         "Hold right-click and spin it around. Look underneath"],
+  challenge:"Build a house with a door and two windows. Every opening is a <b>Hole</b>.",
+  fixes:[["The hole didn't cut","Both shapes have to be selected before you click Group."],
+         ["My shape is floating","Drag the little black cone on top down to zero."],
+         ["I can't see it any more","Press <b>F</b>. The view jumps back to your shape."]],
+  video:"Watch Dad cut a hole (45 sec)"
+},
+{
+  n:17, block:4, title:"Make It Yours",
+  sub:"Today you'll design a name tag with your own name on it.",
+  open:{label:"Open Tinkercad", url:"https://www.tinkercad.com/"},
+  steps:["Start a new <b>3D design</b>",
+         "Drag in a <b>Box</b>. Type its size: <b>60</b> by <b>20</b> by <b>3</b> mm",
+         "Drag <b>Text</b> on top. Type your name. Make it <b>2</b> mm tall",
+         "Add a <b>Cylinder</b> hole near one end for a keyring",
+         "Select everything. Click <b>Group</b>"],
+  challenge:"Make one for everybody in the house. Give each person a different shape.",
+  fixes:[["The letters sank into the box","Lift the text to 3mm. It has to sit on top, not inside."],
+         ["My name is too long","Make the box longer, or make the text narrower."],
+         ["Group ate my letters","Undo. Check the text isn't set to <b>Hole</b>."]],
+  video:"Watch Dad size a box in mm (40 sec)"
+},
+{
+  n:18, block:4, title:"Measure Twice",
+  sub:"Today you'll design something that has to fit a real object.",
+  open:{label:"Open Tinkercad", url:"https://www.tinkercad.com/"},
+  steps:["Measure your micro:bit with a ruler. Write the mm in your book",
+         "Start a new design. Build a stand for it to sit in",
+         "Make the slot <b>1 mm wider</b> than you measured",
+         "Set the slot shape to <b>Hole</b>, select all, then <b>Group</b>",
+         "Spin it round. Check the slot goes all the way through"],
+  challenge:"Design a stand for something else — a phone, a book, the dog's brush. Measure first.",
+  fixes:[["It came out tiny","Tinkercad counts in mm. 5 cm is <b>50</b>."],
+         ["The slot is off to one side","Use <b>Align</b> to centre it, then nudge with the arrow keys."],
+         ["No ruler","Mark the edge of a sheet of paper, then measure the paper."]],
+  video:"Watch Dad measure and type it in (50 sec)"
+},
+{
+  n:19, block:4, title:"Send It to the Printer",
+  sub:"Today you'll turn a design on screen into a real object.",
+  open:{label:"Open Tinkercad", url:"https://www.tinkercad.com/"},
+  steps:["Open your name tag from Week 17",
+         "Click <b>Export</b>, then <b>.STL</b>",
+         "Open that file in the slicer. Click <b>Slice</b>",
+         "Read the time it gives you. Write it in your book",
+         "Send it to the printer. Watch the whole first layer go down"],
+  challenge:"Guess the print time before the slicer tells you. How close were you?",
+  fixes:[["Export is greyed out","Click your design once to select it first."],
+         ["The slicer says it's off the bed","Click <b>Centre</b>, then slice again."],
+         ["Layer one won't stick","Stop it. Wipe the bed clean and start again — always watch layer one."]],
+  video:"Watch Dad slice a file (45 sec)"
+},
+{
+  n:20, block:4, title:"Print It and Fix It",
+  sub:"Today you'll find what's wrong with your print and print a better one.",
+  open:{label:"Open Tinkercad", url:"https://www.tinkercad.com/"},
+  steps:["Hold your print. Write down <b>three</b> things you'd change",
+         "Open the design again. Fix the worst one",
+         "Make anything thin at least <b>2 mm</b> thick",
+         "Export it and slice it again",
+         "Print it. Stand version 1 and version 2 side by side"],
+  challenge:"Show both to someone and let them guess which came first. Ask them why.",
+  fixes:[["It snapped","Thin parts break. Go thicker, or lay it flat on the bed."],
+         ["The letters are fuzzy","Raise the text a little and print it slower."],
+         ["Version 2 came out worse","Good — that's information. Keep both and write down what happened."]],
+  video:"Watch Dad fix a broken part (40 sec)"
+},
+{
+  n:21, block:5, title:"Find a Problem",
+  sub:"Today you'll hunt for a problem worth fixing.",
+  steps:["Walk into every room in the house with your book",
+         "Write down <b>10 things</b> that are annoying, slow, or easy to forget",
+         "Ask two people what annoys them. Add theirs to the list",
+         "Cross out any you can't build with what's on the shelf",
+         "Circle your favourite <b>three</b>"],
+  challenge:"Pick the one that helps someone else, not you. Those are the best inventions.",
+  fixes:[["I can't think of anything","Watch someone do a boring job — washing up, feeding the dog. Wait for the sigh."],
+         ["My ideas are too big","Shrink them. Not a robot — a light that says the dog was fed."],
+         ["I want to build all three","Keep the list. You've got five weeks, not fifty."]],
+  video:"Watch Dad find a problem in the kitchen (45 sec)"
+},
+{
+  n:22, block:5, title:"Sketch the Fix",
+  sub:"Today you'll draw three ways to solve your problem.",
+  steps:["Draw the problem at the top of the page",
+         "Draw <b>three different</b> machines that fix it",
+         "Label the parts of each one: sensor, light, buzzer, motor",
+         "Show all three to someone. Ask which one they'd use",
+         "Circle the winner. List every part you need"],
+  challenge:"Draw the silliest one too. Sometimes that's the one that works.",
+  fixes:[["I can only think of one","Draw the lazy version, the expensive version, and the tiny version."],
+         ["I can't draw","Boxes and arrows count. Nobody is marking the picture."],
+         ["I need a part we don't have","Swap it for one we do. A buzzer can do a lot of jobs."]],
+  video:"Watch Dad sketch three ideas (50 sec)"
+},
+{
+  n:23, block:5, title:"Build the Ugly Version",
+  sub:"Today you'll build a rough version that actually works.",
+  open:{label:"Open MakeCode", url:"https://makecode.microbit.org/"},
+  steps:["Lay every part from your list out on the table",
+         "Wire the sensor first. Get its number onto the screen",
+         "Add the thing that happens — light, sound, or servo",
+         "Hold it all together with cardboard and tape. Don't make it pretty",
+         "Make it work <b>once</b>, start to finish"],
+  challenge:"Time yourself. Can you get from nothing to working in an hour? Ugly is allowed.",
+  fixes:[["Everything is broken at once","Unplug all of it but the sensor. Add one part back at a time."],
+         ["It worked, now it doesn't","A wire has moved. It is almost always a wire."],
+         ["I'm stuck on the code","Open the week where you first used that block and copy it."]],
+  video:"Watch Dad tape a prototype together (45 sec)"
+},
+{
+  n:24, block:5, title:"Test It on Someone",
+  sub:"Today you'll watch someone else try to use your invention.",
+  open:{label:"Open MakeCode", url:"https://makecode.microbit.org/"},
+  steps:["Hand it to someone. Say <b>nothing</b>",
+         "Write down every place they get stuck",
+         "Ask them: what did you think it would do?",
+         "Fix the <b>one</b> worst thing on your list",
+         "Hand it to a second person. See if that thing is gone"],
+  challenge:"Test it on someone younger than you. They say the things adults are too polite to say.",
+  fixes:[["They didn't know what to do","That <em>is</em> the result. Add a label, a light, or a first instruction."],
+         ["It broke during the test","Also a result. Tape the weak part and test it again."],
+         ["They just said it was great","Ask what they'd change if they had to change one thing."]],
+  video:"Watch Dad test with no instructions (40 sec)"
+},
+{
+  n:25, block:5, title:"Invention Night",
+  sub:"Today you'll show your invention to a room full of people.",
+  steps:["Make a sign: the problem, your name, what it does",
+         "Say your demo out loud <b>three times</b> on your own first",
+         "Set it up on a table with spare batteries ready",
+         "Invite everyone. Show it. Then let them try it",
+         "Flip back through your book. All 25 weeks"],
+  challenge:"Teach one person one thing you learned, well enough that they can do it without you.",
+  fixes:[["It won't work in front of people","Fresh batteries, and a photo of it working as back-up. Always."],
+         ["I'm nervous","Say the problem first, then show it. Thirty seconds is plenty."],
+         ["It's finished — now what?","Go back to Week 21 and build the second idea on your list."]],
+  video:"Watch Dad do a 30-second demo (30 sec)"
+}
 ];
 
 /* --- rendering --- */
 const COLORS=["events","motion","looks","sensing","control"];
-const state={};  // in-memory. See note at bottom to make it save for real.
+// Saves her progress on the device. Falls back to memory where storage is blocked.
+let state={};
+try{ state = JSON.parse(localStorage.getItem('maker')||'{}'); }catch(e){}
+function save(){ try{ localStorage.setItem('maker', JSON.stringify(state)); }catch(e){} }
 
 function render(){
+  save();
   const n = parseInt((location.hash.match(/\d+/)||[1])[0]);
   const w = WEEKS.find(x=>x.n===n) || WEEKS[0];
   const B = BLOCKS[w.block];
@@ -267,10 +494,12 @@ function render(){
     <h1>${w.title}</h1>
     <p class="sub">${w.sub}</p>
 
+    ${w.open ? `
     <a class="open" href="${w.open.url}" target="_blank" rel="noopener">
       <span class="flag">▶</span>
       <span>${w.open.label}<small>Do this part on the laptop</small></span></a>
-    <p class="note">iPad stays here to show you the steps. Building happens on the big screen.</p>
+    <p class="note">iPad stays here to show you the steps. Building happens on the big screen.</p>` : `
+    <p class="note">No screen this week. Book, pencil, and your own two eyes.</p>`}
 
     <div class="prog"><h2>Your steps</h2>
       <span class="count">${s.steps.length} of ${w.steps.length} done</span></div>
@@ -307,18 +536,6 @@ function render(){
 addEventListener('hashchange',render);
 render();
 
-/* ------------------------------------------------------------
-   TO MAKE PROGRESS SAVE once this is hosted on your own site,
-   replace the `const state={}` line above with:
-
-     const state = JSON.parse(localStorage.getItem('maker')||'{}');
-
-   and add this as the first line inside render():
-
-     localStorage.setItem('maker', JSON.stringify(state));
-
-   (localStorage is blocked inside Claude, works fine on a real host.)
-   ------------------------------------------------------------ */
 </script>
 </body>
 </html>
