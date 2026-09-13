@@ -502,7 +502,7 @@ function save(){ try{ localStorage.setItem('maker', JSON.stringify(state)); }cat
 
 function render(){
   save();
-  if(location.hash==='#all') return renderAll();
+  if(!location.hash || location.hash==='#all' || location.hash==='#') return renderAll();
   const n = parseInt((location.hash.match(/\d+/)||[1])[0]);
   const w = WEEKS.find(x=>x.n===n) || WEEKS[0];
   const B = BLOCKS[w.block];
