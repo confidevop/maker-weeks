@@ -76,6 +76,28 @@ footer{display:flex;gap:10px;margin-top:26px}
 footer a{flex:1;text-align:center;background:var(--card);border-radius:16px;padding:16px 10px;
   text-decoration:none;color:var(--ink);font-family:'Fredoka';font-weight:500;font-size:16px}
 footer a.off{opacity:.35;pointer-events:none}
+
+/* --- the #all index --- */
+.tally{color:var(--muted);font-weight:700;font-size:17px;margin-bottom:14px}
+.bar{height:14px;background:#fff;border-radius:999px;overflow:hidden;margin-bottom:28px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .4s}
+.bsec{margin-bottom:24px}
+.bsec h2{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.tile{--a:var(--accent);position:relative;display:block;background:var(--card);border:3px solid transparent;
+  border-radius:16px;padding:14px;text-decoration:none;color:var(--ink);
+  box-shadow:0 3px 0 rgba(0,0,0,.10);transition:transform .1s}
+.tile:active{transform:translateY(3px);box-shadow:0 0 0 rgba(0,0,0,.10)}
+.tile .wk{display:block;font-family:'Fredoka';font-weight:600;font-size:13px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--a)}
+.tile .ttl{display:block;font-family:'Fredoka';font-weight:500;font-size:17px;line-height:1.15;margin:3px 0 8px}
+.tile .st{display:block;font-weight:800;font-size:13px;color:var(--muted)}
+.tile.doing{border-color:var(--a)}
+.tile.done{background:var(--a);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.2)}
+.tile.done .wk,.tile.done .st{color:rgba(255,255,255,.8)}
+.tile.done .ttl{text-decoration:line-through;text-decoration-thickness:2px}
+.tile .tick{position:absolute;top:12px;right:12px;width:24px;height:24px;border-radius:50%;
+  background:#fff;color:#2E8B2E;display:grid;place-items:center;font-size:13px;font-weight:800}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -480,6 +502,7 @@ function save(){ try{ localStorage.setItem('maker', JSON.stringify(state)); }cat
 
 function render(){
   save();
+  if(location.hash==='#all') return renderAll();
   const n = parseInt((location.hash.match(/\d+/)||[1])[0]);
   const w = WEEKS.find(x=>x.n===n) || WEEKS[0];
   const B = BLOCKS[w.block];
@@ -533,6 +556,41 @@ function render(){
   document.getElementById('finish').onclick=()=>{ s.done=!s.done; render(); };
   window.scrollTo(0,0);
 }
+function renderAll(){
+  const st = w => state[w.n] || {steps:[],done:false};
+  const done = WEEKS.filter(w=>st(w).done).length;
+  const next = WEEKS.find(w=>!st(w).done);
+  document.documentElement.style.setProperty('--accent', BLOCKS[next?next.block:1].accent);
+
+  const sections = Object.keys(BLOCKS).map(b=>{
+    const B = BLOCKS[b];
+    const tiles = WEEKS.filter(w=>w.block==b).map(w=>{
+      const s = st(w);
+      const cls = s.done ? 'done' : (s.steps.length ? 'doing' : '');
+      const label = s.done ? 'Finished'
+        : s.steps.length ? `${s.steps.length} of ${w.steps.length} steps`
+        : 'Not started yet';
+      return `<a class="tile ${cls}" style="--a:${B.accent}" href="#week${w.n}">
+        ${s.done?'<span class="tick">✓</span>':''}
+        <span class="wk">Week ${w.n}</span>
+        <span class="ttl">${w.title}</span>
+        <span class="st">${label}</span></a>`;
+    }).join('');
+    return `<div class="bsec"><h2 style="color:${B.accent}">Block ${b} &middot; ${B.name}</h2>
+      <div class="grid">${tiles}</div></div>`;
+  }).join('');
+
+  document.getElementById('app').innerHTML=`
+    <h1>All 25 Weeks</h1>
+    <p class="tally">${done===WEEKS.length
+      ? 'Every single one finished. Look at that.'
+      : `${done} of ${WEEKS.length} done &middot; next up is Week ${next.n}`}</p>
+    <div class="bar"><i style="width:${done/WEEKS.length*100}%"></i></div>
+    ${sections}
+    <footer><a href="#week${next?next.n:1}">${next?`Go to Week ${next.n}`:'Back to Week 1'} →</a></footer>`;
+  window.scrollTo(0,0);
+}
+
 addEventListener('hashchange',render);
 render();
 
