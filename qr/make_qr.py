@@ -9,7 +9,7 @@ Edit BASE to your live GitHub Pages URL, then drop the PNGs into the spreads.
 import qrcode
 from qrcode.constants import ERROR_CORRECT_M
 
-BASE = "https://YOURNAME.github.io/maker-weeks/weeks.html"
+BASE = "https://confidevop.github.io/maker-weeks/weeks.html"
 WEEKS = range(1, 26)
 OUT = "."
 
