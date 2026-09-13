@@ -98,6 +98,30 @@ footer a.off{opacity:.35;pointer-events:none}
 .tile.done .ttl{text-decoration:line-through;text-decoration-thickness:2px}
 .tile .tick{position:absolute;top:12px;right:12px;width:24px;height:24px;border-radius:50%;
   background:#fff;color:#2E8B2E;display:grid;place-items:center;font-size:13px;font-weight:800}
+
+/* --- the story page --- */
+.story h1{font-size:46px;margin-bottom:10px}
+.story .lede{font-size:21px;font-weight:700;line-height:1.4;margin-bottom:6px}
+.story .lede+.lede{color:var(--muted);margin-bottom:30px}
+.ch{background:var(--card);border-radius:20px;padding:22px;margin-bottom:12px;border-left:10px solid var(--a)}
+.ch .no{font-family:'Fredoka';font-weight:600;font-size:13px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--a);margin-bottom:6px}
+.ch h2{font-size:27px;line-height:1.1;margin-bottom:10px}
+.ch p{font-weight:700;line-height:1.5;font-size:17px}
+.ch p+p{margin-top:12px}
+.ch em{font-style:normal;color:var(--a)}
+.real{background:var(--ink);color:#fff;border-radius:20px;padding:24px;margin:22px 0 16px}
+.real h2{font-size:27px;margin-bottom:10px}
+.real p{font-weight:700;line-height:1.5;font-size:17px;opacity:.92}
+.real p+p{margin-top:12px}
+.real .punch{font-family:'Fredoka';font-weight:600;font-size:21px;opacity:1;line-height:1.25}
+.go{display:block;width:100%;text-align:center;background:var(--accent);color:#fff;text-decoration:none;
+  font-family:'Fredoka';font-size:24px;font-weight:600;padding:22px;border-radius:20px;
+  box-shadow:0 5px 0 rgba(0,0,0,.25);margin-bottom:12px}
+.go:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.readme{display:block;background:var(--card);border-radius:16px;padding:15px 18px;margin-bottom:22px;
+  text-decoration:none;color:var(--ink);font-weight:800;font-size:16px}
+.readme b{font-family:'Fredoka';font-weight:600;color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -502,6 +526,7 @@ function save(){ try{ localStorage.setItem('maker', JSON.stringify(state)); }cat
 
 function render(){
   save();
+  if(location.hash==='#start') return renderStart();
   if(!location.hash || location.hash==='#all' || location.hash==='#') return renderAll();
   const n = parseInt((location.hash.match(/\d+/)||[1])[0]);
   const w = WEEKS.find(x=>x.n===n) || WEEKS[0];
@@ -556,6 +581,57 @@ function render(){
   document.getElementById('finish').onclick=()=>{ s.done=!s.done; render(); };
   window.scrollTo(0,0);
 }
+function renderStart(){
+  const C = [
+    {b:1, wk:"Weeks 1–5", h:"You start on a screen",
+     p:["A cat that walks when you tell it to. Your name, dancing across the screen. A maze you drew yourself, and a sprite you steer through it without touching the walls.",
+        "By Week 5 you'll have a real game — one that keeps score, one you can lose — and you'll send it to somebody who doesn't live in this house."]},
+    {b:2, wk:"Weeks 6–10", h:"Then the code leaves the screen",
+     p:["You'll hold a small board with twenty-five red lights on it, and you'll make it smile at you. Then answer you. Then roll dice when you shake it.",
+        "In Week 9 you'll stand at one end of the house and press a button, and a second micro:bit at the other end will light up. Nothing connects them. <em>Nothing but the air.</em>",
+        "In Week 10 you'll put one in your pocket and it will count every step you take around the garden."]},
+    {b:3, wk:"Weeks 11–15", h:"Then you build the circuit yourself",
+     p:["Two clips and a bulb, and the light is <em>yours</em> — you decided where the electricity goes. Then sound. Then three lights in a row like a traffic light, running on their own while you stand back and watch.",
+        "Then an arm that waves at you.",
+        "And at the end, two nails pushed into a plant pot and a micro:bit that knows the plant is thirsty before the plant does."]},
+    {b:4, wk:"Weeks 16–20", h:"Then you make things you can hold",
+     p:["You'll build shapes on screen and cut holes straight through them. You'll put your name on something.",
+        "You'll measure a real object with a real ruler and design something that has to fit it — which is harder than it sounds, and much better when it works.",
+        "Then a printer turns your drawing into plastic you can pick up. The first one won't be quite right. That's why there's a Week 20."]},
+    {b:5, wk:"Weeks 21–25", h:"Then the instructions stop",
+     p:["No tutorial. Nobody tells you what to build.",
+        "You'll walk round the house and write down ten things that are annoying. You'll pick one. You'll draw three ways to fix it and build the ugly version out of cardboard and tape and wire.",
+        "You'll hand it to somebody, say nothing, and watch where they get stuck.",
+        "And in Week 25 you'll stand next to the thing you made and tell a room full of people what problem you solved."]}
+  ];
+
+  document.documentElement.style.setProperty('--accent', BLOCKS[1].accent);
+  const chapters = C.map(c=>{
+    const B=BLOCKS[c.b];
+    return `<div class="ch" style="--a:${B.accent}">
+      <div class="no">${c.wk} &middot; ${B.name}</div>
+      <h2>${c.h}</h2>
+      ${c.p.map(t=>`<p>${t}</p>`).join('')}</div>`;
+  }).join('');
+
+  document.getElementById('app').innerHTML=`
+    <div class="story">
+      <h1>This book is yours</h1>
+      <p class="lede">Twenty-five weeks. One a week.</p>
+      <p class="lede">By the end you'll have built something nobody asked you to build.</p>
+      ${chapters}
+      <div class="real">
+        <h2>Some of it will break</h2>
+        <p>Quite a lot of it, actually. A wire comes loose. The print snaps. The thing that worked on Tuesday has no interest in working on Wednesday.</p>
+        <p class="punch">That isn't the part where it goes wrong. That's the part where you're doing it.</p>
+        <p>Every page in this book has a <b>Something's wrong</b> section, because everybody needs one — including the people who build this stuff for a living. Find the loose wire. Fix it. Carry on.</p>
+      </div>
+      <a class="go" href="#week1">Start Week 1 →</a>
+      <footer><a href="#all">All 25 weeks</a></footer>
+    </div>`;
+  window.scrollTo(0,0);
+}
+
 function renderAll(){
   const st = w => state[w.n] || {steps:[],done:false};
   const done = WEEKS.filter(w=>st(w).done).length;
@@ -581,6 +657,7 @@ function renderAll(){
   }).join('');
 
   document.getElementById('app').innerHTML=`
+    <a class="readme" href="#start">📖 <b>What all this is</b> — read this bit first</a>
     <h1>All 25 Weeks</h1>
     <p class="tally">${done===WEEKS.length
       ? 'Every single one finished. Look at that.'
