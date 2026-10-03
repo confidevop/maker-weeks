@@ -8,6 +8,19 @@ BLOCK_TINTS  = {1: "#FFF1EC", 2: "#E8F5F5", 3: "#F2ECFC", 4: "#FCEBEF", 5: "#E9F
 BLOCK_NAMES  = {1: "Coding", 2: "micro:bit", 3: "Electronics", 4: "3D Design", 5: "Invent"}
 
 WEEKS = [
+ dict(n=1, block=1, title="Get the Cat Moving",
+   goal="A beach scene where three characters talk to you.",
+   ready=["Laptop", "Mouse", "scratch.mit.edu open", "Pencil"],
+   steps=["Click the orange <b>Create</b> button.",
+          "Click <b>Tutorials</b> at the top. Pick <b>Getting Started</b>. Follow it.",
+          "Go back to Tutorials. Do <b>Add a Sprite</b>.",
+          "Go back again. Do <b>Add a Backdrop</b>.",
+          "Press the green flag. Watch what happens."],
+   fixes=[("Nothing moves?", "Check you clicked the green flag, not the red stop sign."),
+          ("Blocks won't snap?", "Drag them so they touch the bottom of the block above.")],
+   challenge="Put <b>3 sprites</b> on a beach. Make each one say something different when you click it.",
+   sketch="Draw your scene"),
+
  dict(n=2, block=1, title="Letters Come Alive",
    goal="Your name, dancing across the screen.",
    ready=["Laptop", "Mouse", "Headphones", "Pencil"],
