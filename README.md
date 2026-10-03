@@ -44,7 +44,12 @@ cd qr && python3 make_qr.py
 
 `week01.png` … `week25.png` are already checked in, pointing at
 `confidevop.github.io`. Re-run this only if your Pages URL is different —
-edit `BASE` first.
+edit `BASE` first, then re-run `make_spreads.py` so the printed pages pick
+up the new codes.
+
+Run the QR step **before** the print step: `make_spreads.py` embeds
+`qr/weekNN.png` straight into each spread, and falls back to a dashed
+placeholder box for any week whose PNG is missing.
 
 **3. Print the handbook**
 

@@ -1,3 +1,4 @@
+import base64
 import os
 
 from weasyprint import HTML
@@ -324,39 +325,41 @@ CSS = """
 @page { size: 8.5in 5.5in; margin: 0.38in 0.42in 0.32in 0.85in; }
 * { box-sizing:border-box; margin:0; padding:0; }
 body { font-family:"DejaVu Sans",sans-serif; color:#1E1B1A; font-size:11.5pt; line-height:1.35; }
-.page { page-break-after:always; height:4.8in; display:flex; flex-direction:column; }
+.page { page-break-after:always; height:4.8in; position:relative; }
 .page:last-child { page-break-after:auto; }
 .strip { display:flex; justify-content:space-between; align-items:center;
   border-bottom:3.5pt solid %(c)s; padding-bottom:3pt; margin-bottom:7pt; }
 .block-tag { font-size:8.5pt; font-weight:bold; letter-spacing:1.6pt; color:%(c)s; text-transform:uppercase; }
 .week-tag { font-size:8.5pt; font-weight:bold; letter-spacing:1.6pt; color:#8A8583; text-transform:uppercase; }
-h1 { font-size:22pt; line-height:1.0; letter-spacing:-0.4pt; margin-bottom:6pt; }
-.goal { background:%(t)s; border-left:5pt solid %(c)s; padding:5pt 9pt; margin-bottom:8pt; }
+h1 { font-size:22pt; line-height:1.0; letter-spacing:-0.4pt; margin-bottom:4pt; }
+.goal { background:%(t)s; border-left:5pt solid %(c)s; padding:4pt 9pt; margin-bottom:6pt; }
 .goal .lbl { font-size:8pt; font-weight:bold; letter-spacing:1.2pt; color:%(c)s; text-transform:uppercase; }
 .goal .txt { font-size:12pt; font-weight:bold; margin-top:2pt; }
-.cols { display:flex; gap:20pt; flex:1; }
+.cols { display:flex; gap:20pt; padding-bottom:1.08in; }
 .col-ready { width:30%%; } .col-steps { width:70%%; }
 h2 { font-size:8.5pt; font-weight:bold; letter-spacing:1.4pt; text-transform:uppercase; color:#8A8583; margin-bottom:6pt; }
 ul { list-style:none; }
-.check li { margin-bottom:6pt; font-size:11pt; padding-left:20pt; position:relative; }
+.check li { margin-bottom:4.5pt; font-size:11pt; padding-left:20pt; position:relative; }
 .check li:before { content:""; position:absolute; left:0; top:1.5pt; width:12pt; height:12pt;
   border:1.6pt solid #1E1B1A; border-radius:2pt; }
 ol.steps { list-style:none; counter-reset:s; }
-ol.steps li { counter-increment:s; margin-bottom:5pt; padding-left:24pt; position:relative; font-size:11pt; }
+ol.steps li { counter-increment:s; margin-bottom:4pt; padding-left:24pt; position:relative; font-size:11pt; }
 ol.steps li:before { content:counter(s); position:absolute; left:0; top:-0.5pt; width:17pt; height:17pt;
   background:%(c)s; color:#fff; border-radius:50%%; font-size:10pt; font-weight:bold; text-align:center; line-height:17pt; }
-.footrow { display:flex; gap:12pt; margin-top:6pt; align-items:stretch; }
+.footrow { position:absolute; left:0; right:0; bottom:0; display:flex; gap:12pt; align-items:stretch; }
 .fix { flex:1; border:1.2pt solid #D9D4D1; border-radius:4pt; padding:6pt 9pt; }
 .fix h2 { margin-bottom:4pt; }
 .fix p { font-size:9pt; margin-bottom:2pt; }
-.qr { width:0.95in; border:1.6pt dashed #B5AFAC; border-radius:4pt; display:flex; flex-direction:column;
+.qr { width:0.98in; border:1.6pt dashed #B5AFAC; border-radius:4pt; display:flex; flex-direction:column;
   align-items:center; justify-content:center; text-align:center; padding:4pt; }
+.qr.has-code { border-style:solid; border-color:#E4E0DD; }
 .qr .box { font-size:7pt; color:#B5AFAC; letter-spacing:0.5pt; }
+.qr img { width:0.80in; height:0.80in; display:block; image-rendering:pixelated; }
 .qr .cap { font-size:6.5pt; font-weight:bold; letter-spacing:0.6pt; color:#8A8583; text-transform:uppercase; margin-top:3pt; line-height:1.2; }
 .yours { background:%(t)s; border-radius:5pt; padding:8pt 11pt; margin-bottom:9pt; }
 .yours .lbl { font-size:8pt; font-weight:bold; letter-spacing:1.2pt; color:%(c)s; text-transform:uppercase; }
 .yours .txt { font-size:12pt; margin-top:3pt; }
-.sketch { flex:1; border:1.6pt solid #D9D4D1; border-radius:5pt; position:relative; margin-bottom:10pt; }
+.sketch { height:2.1in; border:1.6pt solid #D9D4D1; border-radius:5pt; position:relative; margin-bottom:10pt; }
 .sketch span { position:absolute; top:6pt; left:10pt; font-size:8.5pt; font-weight:bold;
   letter-spacing:1.4pt; color:#B5AFAC; text-transform:uppercase; }
 .bottomrow { display:flex; gap:16pt; align-items:flex-end; }
@@ -373,7 +376,7 @@ INTRO_CSS = """
 @page { size: 8.5in 5.5in; margin: 0.38in 0.42in 0.32in 0.85in; }
 * { box-sizing:border-box; margin:0; padding:0; }
 body { font-family:"DejaVu Sans",sans-serif; color:#1E1B1A; font-size:11.5pt; line-height:1.4; }
-.page { page-break-after:always; height:4.8in; display:flex; flex-direction:column; }
+.page { page-break-after:always; height:4.8in; position:relative; }
 .page:last-child { page-break-after:auto; }
 .strip { display:flex; justify-content:space-between; align-items:center; flex:0 0 auto;
   border-bottom:3.5pt solid #1E1B1A; padding-bottom:3pt; margin-bottom:10pt; }
@@ -453,6 +456,20 @@ def intro():
                  chapters_a=chunk(INTRO_CHAPTERS[:3]),
                  chapters_b=chunk(INTRO_CHAPTERS[3:]))
 
+QR_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "qr")
+
+def qr_box(n):
+    """The QR square for week n. Falls back to the placeholder if the PNG
+    hasn't been generated yet (see qr/make_qr.py)."""
+    path = os.path.join(QR_DIR, "week%02d.png" % n)
+    if not os.path.exists(path):
+        return ('<div class="qr"><div class="box">[ QR CODE ]</div>'
+                '<div class="cap">Links &amp;<br>Tracker</div></div>')
+    with open(path, "rb") as fh:
+        b64 = base64.b64encode(fh.read()).decode("ascii")
+    return ('<div class="qr has-code"><img src="data:image/png;base64,%s" alt="">'
+            '<div class="cap">Scan me</div></div>' % b64)
+
 def spread(w):
     b = w["block"]
     tag = "Block %d &middot; %s" % (b, BLOCK_NAMES[b])
@@ -470,7 +487,7 @@ def spread(w):
   </div>
   <div class="footrow">
     <div class="fix"><h2>If it breaks</h2>%(fixes)s</div>
-    <div class="qr"><div class="box">[ QR CODE ]</div><div class="cap">Links &amp;<br>Tracker</div></div>
+    %(qr)s
   </div>
 </div>
 <div class="page">
@@ -482,7 +499,7 @@ def spread(w):
       <div class="date">Date: ____________________</div></div>
     <div class="learned"><h2>One thing I learned</h2><div class="rule"></div><div class="rule"></div></div>
   </div>
-</div>""" % dict(tag=tag, n=w["n"], title=w["title"], goal=w["goal"],
+</div>""" % dict(tag=tag, n=w["n"], title=w["title"], goal=w["goal"], qr=qr_box(w["n"]),
                  ready=ready, steps=steps, fixes=fixes,
                  challenge=w["challenge"], sketch=w["sketch"])
 
