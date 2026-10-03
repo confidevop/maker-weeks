@@ -58,8 +58,8 @@ cd print && pip install weasyprint && python3 make_spreads.py
 ```
 
 Writes `intro.pdf` (the story — front of the binder) and one PDF per
-block, `block1-weeks2-5.pdf` through `block5-weeks21-25.pdf`, into
-`print/`. Week 1 is its own `week01.pdf`.
+block, `block1-weeks1-5.pdf` through `block5-weeks21-25.pdf`, into
+`print/`. All 25 weeks come from the `WEEKS` list — nothing is hand-made.
 Half-letter landscape, 1-sided, 0.85in left margin for 3-hole punch.
 
 ---
